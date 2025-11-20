@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<installer-gui-script minSpecVersion="1">
+    <title>SU_TITLE</title>
+    <options customize="never" require-scripts="false" hostArchitectures="x86_64,arm64" allow-external-scripts="no"/>
+    <volume-check>
+        <allowed-os-versions>
+            <os-version min="10.13"/>
+        </allowed-os-versions>
+    </volume-check>
+    <choices-outline>
+        <line choice="default">
+            <line choice="app"/>
+        </line>
+    </choices-outline>
+    <choice id="default"/>
+    <choice id="app" visible="false">
+        <pkg-ref id="app"/>
+    </choice>
+    <pkg-ref id="app" version="0" onConclusion="none">app.pkg</pkg-ref>
+</installer-gui-script>

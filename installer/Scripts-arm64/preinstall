@@ -1,0 +1,64 @@
+#!/bin/bash
+
+main() {
+    download_link="<x86_64_download_link_here>"
+    
+    local arch=$(uname -m)
+    echo "arch: $arch"
+
+    case $arch in
+        arm64)
+            echo "Compatible: $arch"
+            exit 0
+            ;;
+        *)
+            osascript <<EOF
+try
+	  set currentUser to do shell script "ls -la /dev/console | cut -d ' ' -f 4"
+    try
+        set userLocale to do shell script "sudo -u " & currentUser & " defaults read NSGlobalDomain AppleLocale 2>/dev/null || echo en"
+    on error
+        try
+            set userLocale to do shell script "sudo -u " & currentUser & " defaults read .GlobalPreferences AppleLocale 2>/dev/null || echo en"
+        on error
+            set userLocale to "en"
+        end try
+    end try
+on error
+    set userLocale to "en"
+end try
+
+set localizedTexts to {}
+if userLocale starts with "zh_CN" then
+    set localizedTexts to {¬
+        error_title:"架构不支持", ¬
+        error_message:"此安装包版本不适用于您的电脑芯片 (英特尔) ，请下载合适的版本后再次安装。", ¬
+        download_button:"下载", ¬
+        quit_button:"退出" ¬
+    }
+else
+    set localizedTexts to {¬
+        error_title:"Architecture Not Compatible", ¬
+        error_message:"This installer is not compatible with your computer's chip (Intel). Please download the proper version and install it again.", ¬
+        download_button:"Download", ¬
+        quit_button:"Quit" ¬
+    }
+end if
+
+tell application "System Events" to activate
+set dialogResult to display dialog (error_message of localizedTexts) ¬
+    with icon stop ¬
+    with title (error_title of localizedTexts) ¬
+    buttons {download_button of localizedTexts, quit_button of localizedTexts} ¬
+    default button (download_button of localizedTexts)
+
+if button returned of dialogResult is (download_button of localizedTexts) then
+    open location "${download_link}"
+end if
+EOF
+            exit 1
+            ;;
+    esac
+}
+
+main "$@"

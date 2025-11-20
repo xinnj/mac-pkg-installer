@@ -1,0 +1,13 @@
+// General
+SU_TITLE="my-product";
+
+// Error strings
+instanceIsRunning="You must close the my-product application before you can install this software.";
+isDowngrade="A newer version of the my-product application is already installed.";
+OS_VER_ERR="This software requires Mac OS X version 10.13 or later.";
+
+// Installation check titles
+T_INST="my-product";
+
+// Choice strings
+T_CHOICE="my-product";

@@ -1,0 +1,13 @@
+// General
+SU_TITLE="我的产品";
+
+// Error strings
+instanceIsRunning="必须先关闭 我的产品 应用程序才能安装此软件。";
+isDowngrade="已安装较新版本的 我的产品 应用程序。";
+OS_VER_ERR="此软件要求安装 Mac OS X 版本 10.13 或更高版本。";
+
+// Installation check titles
+T_INST="我的产品";
+
+// Choice strings
+T_CHOICE="我的产品";
